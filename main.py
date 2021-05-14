@@ -36,7 +36,7 @@ def main():
 
 		movement.move(player, pygame.key.get_pressed(), dt / 25)
 		r.draw_playermodel(screen, player)
-		r.draw_hud(screen, player, clock.get_fps())
+		r.draw_hud(screen, player, int(clock.get_fps()))
 		pygame.display.flip()
 
 if __name__ == "__main__":

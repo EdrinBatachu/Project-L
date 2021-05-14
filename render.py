@@ -9,7 +9,6 @@ def get_sprites(name):
 		images.append(img)
 	return images
 
-
 def draw_playermodel(screen, player):
 	player_surf = pygame.Surface((120, 160))
 	player_surf.fill(MAGIC_BLUE)
@@ -17,13 +16,13 @@ def draw_playermodel(screen, player):
 	height = (screen.get_height() / 2) - (player_surf.get_height() / 2) - (75)
 	screen.blit(player_surf, (width, height))
 
-bar_border = pygame.Surface((400, 30))
+bar_border = pygame.Surface((400, 40))
+health_bar_back = pygame.Surface((390 , 30))
+
 stat_border = pygame.Surface((300, 125))
-
 stat_hud = pygame.Surface((290, 115))
-hud = pygame.Surface((1280, 150))
 
-health_bar_back = pygame.Surface((390 , 20))
+hud = pygame.Surface((1280 - 300, 150))
 
 empty = pygame.Surface((0,0))
 
@@ -39,27 +38,27 @@ def draw_hud(screen, player, fps):
 		# HEALTH BAR BELOW
 
 		if player.health > 0:
-			surf = pygame.Surface((390 * ((player.health / player.max_health)), 20))
+			surf = pygame.Surface((390 * ((player.health / player.max_health)), 30))
 		else:
 			surf = empty
 		surf.fill(GREEN)
 		health_bar_back.blit(surf, (0, 0))
 		img = font.render("%s / %s" % (int(player.health), player.max_health), True, BLACK)
-		health_bar_back.blit(img, (2, 5))
+		health_bar_back.blit(img, (2, 10))
 		bar_border.blit(health_bar_back, (5, 5))
-		hud.blit(bar_border, ((1280 / 2) - 200, 12.5))
+		hud.blit(bar_border, (hud.get_width() - 400 - 12.5, 25))
 
 		# SPECIAL CHARGE
 		if player.charge > 0:
-			surf = pygame.Surface((390 * ((player.charge / 100)), 20))
+			surf = pygame.Surface((390 * ((player.charge / 100)), 30))
 		else:
 			surf = empty
 		surf.fill(MAGIC_BLUE)
 		health_bar_back.blit(surf, (0, 0))
 		img = font.render("%s / %s" % (player.charge, 100), True, BLACK)
-		health_bar_back.blit(img, (2, 5))
+		health_bar_back.blit(img, (2, 10))
 		bar_border.blit(health_bar_back, (5, 5))
-		hud.blit(bar_border, ((1280 / 2) - 200, 12.5 * 4))
+		hud.blit(bar_border, (hud.get_width() - 400 - 12.5, hud.get_height() - 25 - bar_border.get_height()))
 
 		# STATS BELOW
 		stat_hud.fill(HUD)
@@ -86,4 +85,4 @@ def draw_hud(screen, player, fps):
 
 		fps = font.render("FPS: %s" % fps, True, WHITE)
 		screen.blit(fps, (screen.get_width() - fps.get_width(), 0))
-		screen.blit(hud, (0, 720 - 150))
+		screen.blit(hud, (150, 720 - 150))
