@@ -9,8 +9,15 @@ def get_sprites(name):
 		images.append(img)
 	return images
 
+
+enemy_surf = pygame.Surface((120, 160))
+def draw_enemies(screen, enemies):
+	enemy_surf.fill(RED)
+	for enemy in enemies:
+		screen.blit(enemy_surf, (enemy.position))
+
+player_surf = pygame.Surface((120, 160))
 def draw_playermodel(screen, player):
-	player_surf = pygame.Surface((120, 160))
 	player_surf.fill(MAGIC_BLUE)
 	width = (screen.get_width() / 2) - (player_surf.get_width() / 2) 
 	height = (screen.get_height() / 2) - (player_surf.get_height() / 2) - (75)

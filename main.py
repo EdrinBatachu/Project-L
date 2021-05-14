@@ -22,6 +22,8 @@ def main():
 
 	player = c.get_champion(1)
 
+	enemies = []
+
 	screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 	running = True
@@ -35,6 +37,7 @@ def main():
 				running = False
 
 		movement.move(player, pygame.key.get_pressed(), dt / 25)
+		r.draw_enemies(screen, enemies)
 		r.draw_playermodel(screen, player)
 		r.draw_hud(screen, player, int(clock.get_fps()))
 		pygame.display.flip()
