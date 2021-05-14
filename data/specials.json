@@ -1,0 +1,32 @@
+[
+	{
+		"id" : 0,
+		"name": "Judgement",
+		"Description" : "The God of the kingdom is called upon, smiting the enemy.",
+		"Effect" : "If the enemy is below 10% + attacker.attack // 10 health, they are executed, else, *2x the attackers attack."
+	},
+	{
+		"id" : 1,
+		"name": "Arcane Barrage",
+		"Description" : "An unstoppable barrage of pure magic is hurled at the enemy.",
+		"Effect" : "Deals double the attackers damage, and causes the mage's next attack to do 1.2x damage."
+	},
+	{
+		"id" : 2,
+		"name": "Retaliate",
+		"Description" : "Juggernaut throws out a massive punch that does more damage the more you've hurt him.",
+		"Effect" : "Deals 50 damage per 10% missing health, up to 450."
+	},
+	{
+		"id" : 3,
+		"name" : "Backstab",
+		"Description" : "The Assassin runs behind the enemy, dealing massive damage with their dagger.",
+		"Effect" : "Deals 3x the attackers attack, and causes the enemy to have a 50% chance to miss next attack."
+	},
+	{
+		"id" : 4,
+		"name": "Fortify",
+		"Description" : "The Tank braces for impact, raising their defence to unparalleled levels.",
+		"Effect" : "For the next 2 turns, defence is 3x, enemy attacks have 10% chance to ricochet off."
+	}
+]

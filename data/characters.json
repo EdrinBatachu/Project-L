@@ -1,0 +1,57 @@
+[
+	{
+		"id" : 0,
+		"name" : "Knight",
+		"attack" : 50,
+		"armour" : 50,
+		"magic" : 0,
+		"magic_resist" : 40,
+		"speed" : 15,
+		"health" : 500,
+		"description" : "The Knight is a brave warrior from the kingdom. Good attack and resists but slow speed."
+	},
+	{
+		"id" : 1,
+		"name" : "Mage",
+		"attack" : 10,
+		"armour" : 25,
+		"magic" : 100,
+		"magic_resist" : 40,
+		"speed" : 15,
+		"health" : 300,
+		"description" : "The Mage is a master of all things arcane. High attack but low armour. Average speed."
+	},
+	{
+		"id" : 2,
+		"name" : "Juggernaut",
+		"attack" : 70,
+		"armour" : 50,
+		"magic" : 0,
+		"magic_resist" : 50,
+		"speed" : 10,
+		"health" : 700,
+		"description" : "The Juggernaut is a renowned fighter, best known for his unrelenting strength. High attack and high defence, but abysmal speed."
+	},
+	{
+		"id" : 3,
+		"name" : "Assassin",
+		"attack" : 100,
+		"armour" : 20,
+		"magic" : 0,
+		"magic_resist" : 20,
+		"speed" : 20,
+		"health" : 250,
+		"description" : "The Assassin is a criminal, armed with a dagger, dealing extremely high damage and having extremely high speed, but very low defence."
+	},
+	{
+		"id" : 4,
+		"name" : "Tank",
+		"attack" : 15,
+		"armour" : 120,
+		"magic" : 15,
+		"magic_resist" : 120,
+		"speed" : 13,
+		"health" : 1000,
+		"description" : "The Tank is a reliable frontliner, extremely high defence but with low attack and speed."
+	}
+]
