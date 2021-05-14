@@ -11,10 +11,10 @@ def get_sprites(name):
 
 
 enemy_surf = pygame.Surface((120, 160))
-def draw_enemies(screen, enemies):
+def draw_enemies(screen, enemies, player):
 	enemy_surf.fill(RED)
 	for enemy in enemies:
-		screen.blit(enemy_surf, (enemy.position))
+		screen.blit(enemy_surf, (enemy.position[0] - player.position[0], enemy.position[1] - player.position[1]))
 
 player_surf = pygame.Surface((120, 160))
 def draw_playermodel(screen, player):
@@ -92,4 +92,8 @@ def draw_hud(screen, player, fps):
 
 		fps = font.render("FPS: %s" % fps, True, WHITE)
 		screen.blit(fps, (screen.get_width() - fps.get_width(), 0))
+
+		pos = font.render("(%s, %s)" % (int(player.position[0]), int(player.position[1])), True, WHITE)
+		screen.blit(pos, (screen.get_width() - pos.get_width(), fps.get_height() + 5))
+
 		screen.blit(hud, (150, 720 - 150))

@@ -1,6 +1,7 @@
 import random, json, math, os, pygame
 
 import characters as c
+import enemies as e
 import specials as s
 import render as r
 import floor_generation as f
@@ -20,9 +21,9 @@ pygame.init()
 
 def main():
 
-	player = c.get_champion(1)
-
-	enemies = []
+	player = c.get_champion(2)
+	enemy = e.get_enemy(0)
+	enemies = [enemy]
 
 	screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
@@ -36,8 +37,8 @@ def main():
 			if event.type == pygame.QUIT:
 				running = False
 
-		movement.move(player, pygame.key.get_pressed(), dt / 25)
-		r.draw_enemies(screen, enemies)
+		movement.move(player, pygame.key.get_pressed(), dt / 60)
+		r.draw_enemies(screen, enemies, player)
 		r.draw_playermodel(screen, player)
 		r.draw_hud(screen, player, int(clock.get_fps()))
 		pygame.display.flip()

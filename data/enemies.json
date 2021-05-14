@@ -1,0 +1,13 @@
+[
+	{
+		"id" : 0,
+		"name" : "Biter",
+		"attack" : 10,
+		"armour" : 10,
+		"magic" : 0,
+		"magic_resist" : 5,
+		"speed" : 5,
+		"health" : 100,
+		"description" : "Basic enemy."
+	}
+]
