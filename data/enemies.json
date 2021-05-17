@@ -3,7 +3,7 @@
 		"id" : 0,
 		"name" : "Biter",
 		"attack" : 10,
-		"armour" : 10,
+		"armour" : 5,
 		"magic" : 0,
 		"magic_resist" : 5,
 		"speed" : 5,

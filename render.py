@@ -1,5 +1,5 @@
 import pygame
-from main import HUD, BLACK, RED, GREEN, MAGIC_BLUE, DAMAGE_ORANGE, WHITE
+from main import HUD, BLACK, RED, GREEN, MAGIC_BLUE, DAMAGE_ORANGE, WHITE, TILESIZE, FLOOR
 
 def get_sprites(name):
 	images = []
@@ -10,18 +10,58 @@ def get_sprites(name):
 	return images
 
 
-enemy_surf = pygame.Surface((120, 160))
-def draw_enemies(screen, enemies, player):
-	enemy_surf.fill(RED)
-	for enemy in enemies:
-		screen.blit(enemy_surf, (enemy.position[0] - player.position[0], enemy.position[1] - player.position[1]))
+floor_surf = pygame.Surface((TILESIZE, TILESIZE))
+floor_surf.fill(FLOOR)
+wall_surf = pygame.Surface((TILESIZE, TILESIZE))
+wall_surf.fill(HUD)
+door_surf = pygame.Surface((TILESIZE, TILESIZE))
+door_surf.fill(WHITE)
 
-player_surf = pygame.Surface((120, 160))
-def draw_playermodel(screen, player):
-	player_surf.fill(MAGIC_BLUE)
-	width = (screen.get_width() / 2) - (player_surf.get_width() / 2) 
-	height = (screen.get_height() / 2) - (player_surf.get_height() / 2) - (75)
-	screen.blit(player_surf, (width, height))
+width, height = 0, 0
+def init(screen, player):
+	global width, height
+	width = (screen.get_width() / 2) - (player.surf.get_width() / 2) 
+	height = (screen.get_height() / 2) - (player.surf.get_height() / 2) - (75)
+
+
+def draw_damage(damage, dmg_type, position):
+	font = pygame.font.SysFont("Roboto Mono", 28)
+	if dmg_type == "magic":
+		text = font.render(str(int(damage)), True, MAGIC_BLUE)
+	elif dmg_type == "attack":
+		text = font.render(str(int(damage)), True, DAMAGE_ORANGE)
+
+	return text
+
+
+
+def draw_room(room, player, screen):
+	x = 0
+	for i in room:
+		y = 0
+		for j in i:
+			if room[x][y] == ".":
+				screen.blit(floor_surf, ((x * TILESIZE) -player.position[0] + width, (y * TILESIZE)- player.position[1]+ height))
+			elif room[x][y] == "#":
+				screen.blit(wall_surf, ((x * TILESIZE)- player.position[0]+ width, (y * TILESIZE)- player.position[1]+ height))
+			elif room[x][y] == "X":
+				screen.blit(door_surf, ((x * TILESIZE)- player.position[0]+ width, (y * TILESIZE)- player.position[1]+ height))
+			y += 1
+		x += 1 
+
+
+
+def draw_entities(screen, entities, player):
+	for enemy in entities:
+		screen.blit(enemy.surf, (enemy.position[0] - player.position[0] + width, enemy.position[1] - player.position[1] + height))
+		enemyhealthbar = pygame.Surface((120 * (enemy.health / enemy.max_health), 10))
+		enemyhealthbar.fill(GREEN)
+		screen.blit(enemyhealthbar, (enemy.position[0] - player.position[0] + width, enemy.position[1] - player.position[1] + height - 20))
+
+	screen.blit(player.surf, (width, height))
+
+	for entity in player.entities:
+		screen.blit(entity.surf, (entity.position[0] - player.position[0] + width, entity.position[1] - player.position[1] + height))
 
 bar_border = pygame.Surface((400, 40))
 health_bar_back = pygame.Surface((390 , 30))
@@ -56,6 +96,7 @@ def draw_hud(screen, player, fps):
 		hud.blit(bar_border, (hud.get_width() - 400 - 12.5, 25))
 
 		# SPECIAL CHARGE
+		health_bar_back.fill(WHITE)
 		if player.charge > 0:
 			surf = pygame.Surface((390 * ((player.charge / 100)), 30))
 		else:

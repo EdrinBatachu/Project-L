@@ -8,6 +8,7 @@
 		"magic_resist" : 40,
 		"speed" : 15,
 		"health" : 500,
+		"range" : "melee",
 		"description" : "The Knight is a brave warrior from the kingdom. Good attack and resists but slow speed."
 	},
 	{
@@ -19,6 +20,7 @@
 		"magic_resist" : 40,
 		"speed" : 15,
 		"health" : 300,
+		"range" : "ranged",
 		"description" : "The Mage is a master of all things arcane. High attack but low armour. Average speed."
 	},
 	{
@@ -30,6 +32,7 @@
 		"magic_resist" : 50,
 		"speed" : 10,
 		"health" : 700,
+		"range" : "melee",
 		"description" : "The Juggernaut is a renowned fighter, best known for his unrelenting strength. High attack and high defence, but abysmal speed."
 	},
 	{
@@ -41,6 +44,7 @@
 		"magic_resist" : 20,
 		"speed" : 20,
 		"health" : 250,
+		"range" : "melee",
 		"description" : "The Assassin is a criminal, armed with a dagger, dealing extremely high damage and having extremely high speed, but very low defence."
 	},
 	{
@@ -52,6 +56,7 @@
 		"magic_resist" : 120,
 		"speed" : 13,
 		"health" : 1000,
+		"range" : "melee",
 		"description" : "The Tank is a reliable frontliner, extremely high defence but with low attack and speed."
 	}
 ]
