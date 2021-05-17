@@ -1,6 +1,7 @@
 import json, pygame
 import enemies as E
 import render
+from movement import get_direction
 
 
 class Entity:
@@ -46,18 +47,18 @@ class Judgement(Entity):
 	id = 0
 	name = "Judgement"
 	description = "The god of the kingdom is called upon, smiting the enemy."
-	effect = "If the enemy is below 10% + caster.attack // 10 health, they are executed. Else, this attack deals 1.5x basic attack damage."
+	effect = "If the enemy is below 10% + (caster.attack / 2) health, they are executed and the cost is refunded. Else, this attack deals 1.5x basic attack damage."
 
 	def __init__(self, caster):
 		if caster.charge == 100:
 			for i in caster.enemies:
 				if (abs(i.rect.center[0] - caster.rect.center[0]) < 200) and (abs(i.rect.center[1] - caster.rect.center[1] < 200)):
 					enemy = i
-					caster.charge = 0
-					print(((enemy.max_health / 10) + caster.attack * caster.attack_mod))
-					if enemy.health < (enemy.max_health / 10) + caster.attack * caster.attack_mod:
+					print(((enemy.max_health / 10) + caster.attack * caster.attack_mod / 2 ))
+					if enemy.health < (enemy.max_health / 10) + caster.attack * caster.attack_mod / 2:
 						enemy.health = 0
 					else:
+						caster.charge = 0
 						enemy.health -= caster.attack * caster.attack_mod * 1.5 / enemy.armour * enemy.armour_mod
 				else:
 					print("No one close enough!")
@@ -70,30 +71,34 @@ class ArcaneBarrage(Entity):
 	id = 1
 	name = "Arcane Barrage"
 	description = "An unstoppable barrage of pure magic is hurled at the enemy."
-	effect = "Deals 2.5x the caster's magic, and buffs all the caster's magic attacks from now."
+	effect = "Deals 1.5x the caster's magic, and buffs all the caster's magic attacks from now."
 	speed = 50
 	surf = pygame.Surface((120, 120))
 	surf.fill((0, 183, 255))
 
 	def __init__(self, caster):
-		if caster.charge > 80:
-			caster.magic_mod += 0.2
-			caster.charge = 0
-			damage = caster.magic * 2 * caster.magic_mod
+		if caster.charge > 20:
+			caster.magic_mod += 0.1
+			caster.charge -= 20
+			damage = caster.magic * 1.5 * caster.magic_mod
 			super().__init__((caster.position[:]), ArcaneBarrage.speed, caster.direction[:], ArcaneBarrage.surf, damage=damage,lifetime=3)
 			self.hit = []
+			self.target = pygame.mouse.get_pos()
 			caster.entities.append(self)
 		else:
 			print("Not enough charge!")
 
 
 	def update(self, dt, enemies):
-		vector = self.direction[:]
+		vector = get_direction(self.rect.center, self.target)
 		vector[0] *= self.speed * dt / 60
 		vector[1] *= self.speed * dt / 60
+		print(vector)
 		self.position[0] += vector[0]
 		self.position[1] += vector[1]
-		self.rect = pygame.Rect(self.position, (self.surf.get_width(), self.surf.get_height()))
+		self.rect.top = self.position[1]
+		self.rect.left = self.position[0]
+
 		for e in enemies:
 			if not (e in self.hit):
 				if e.rect.colliderect(self.rect):

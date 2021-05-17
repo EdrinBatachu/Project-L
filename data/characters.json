@@ -6,7 +6,7 @@
 		"armour" : 50,
 		"magic" : 0,
 		"magic_resist" : 40,
-		"speed" : 15,
+		"speed" : 20,
 		"health" : 500,
 		"range" : "melee",
 		"description" : "The Knight is a brave warrior from the kingdom. Good attack and resists but slow speed."
@@ -18,7 +18,7 @@
 		"armour" : 25,
 		"magic" : 100,
 		"magic_resist" : 40,
-		"speed" : 15,
+		"speed" : 20,
 		"health" : 300,
 		"range" : "ranged",
 		"description" : "The Mage is a master of all things arcane. High attack but low armour. Average speed."

@@ -27,7 +27,7 @@ walls = []
 
 def update_entities(entities, player, dt):
 	for i in entities:
-		i.update()
+		i.update(player)
 		if i.health <= 0:
 			entities.remove(i)
 
@@ -35,7 +35,7 @@ def update_entities(entities, player, dt):
 		i.update(dt, entities)
 
 def main():
-	player = c.get_champion(0)
+	player = c.get_champion(1)
 	enemy = e.get_enemy(0)
 	entities = [enemy]
 
@@ -51,7 +51,7 @@ def main():
 	millisecond = 0
 	while running:
 		screen.fill(BLACK)
-		dt = clock.tick(60)
+		dt = clock.tick(75)
 
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -77,7 +77,7 @@ def main():
 
 		player.update(entities)
 		movement.move(player, pygame.key.get_pressed(), dt / 60, walls)
-
+		movement.move_enemy(entities, walls, dt / 60)
 		r.draw_room(room, player, screen)
 		r.draw_entities(screen, entities, player)
 		r.draw_hud(screen, player, int(clock.get_fps()))

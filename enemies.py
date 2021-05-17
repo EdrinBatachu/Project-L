@@ -21,7 +21,7 @@ class Enemy:
 		self.magic_resist = magic_resist
 		self.speed = speed
 		self.max_health = health
-		self.health = 60
+		self.health = 59
 
 		self.attack_mod = 1
 		self.armour_mod = 1
@@ -46,13 +46,22 @@ class Enemy:
 		self.surf = pygame.Surface((120, 160))
 		self.surf.fill((255, 0, 0))
 		self.rect = self.surf.get_rect()
+		self.sight_rect = pygame.Rect(self.position, (700, 700))
+
+		self.target = None
 
 	def __repr__(self):
 		return "%s, on %s health." % (self.name, self.health)
 
-	def update(self):
+	def update(self, player):
 		self.rect.top = self.position[1]
 		self.rect.left = self.position[0]
+		self.sight_rect.center = self.rect.center
+
+		if player.rect.colliderect(self.sight_rect):
+			self.target = player.position
+		else:
+			self.target = None
 
 	def attack(self, target):
 		if self.magic > self.attack:

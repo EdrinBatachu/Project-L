@@ -1,6 +1,7 @@
 import json
 import specials as s
 import pygame
+from movement import get_direction
 
 with open("data/characters.json") as file:
 	champions = json.load(file)
@@ -64,6 +65,7 @@ class Fighter:
 		self.rect.top = self.position[1]
 		self.rect.left = self.position[0]
 		self.enemies = enemies
+		#self.direction = list(pygame.mouse.get_pos())
 
 	def attack(self, target):
 		if self.magic > self.attack:
