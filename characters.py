@@ -14,10 +14,10 @@ def get_champion(identify):
 		print("No champion with that ID")
 		return
 
-	return Fighter(champ["name"], champ["attack"], champ["armour"], champ["magic"], champ["magic_resist"], champ["speed"], champ["health"])
+	return Fighter(champ["name"], champ["attack"], champ["armour"], champ["magic"], champ["magic_resist"], champ["speed"], champ["health"], champ["colour"])
 
 class Fighter:
-	def __init__(self, name, attack, armour, magic, magic_resist, speed, health):
+	def __init__(self, name, attack, armour, magic, magic_resist, speed, health, colour):
 		self.name = name
 		self.attack = attack
 		self.armour = armour
@@ -55,13 +55,15 @@ class Fighter:
 		self.enemies = []
 
 		self.surf = pygame.Surface((120, 160))
-		self.surf.fill((0, 255, 0))
+		self.surf.fill((colour))
 		self.rect = pygame.Rect((self.position), (120, 160))
+		self.mousepos = [0, 0]
 
 	def __repr__(self):
 		return "%s, on %s health." % (self.name, self.health)
 
-	def update(self, enemies):
+	def update(self, enemies, mousepos):
+		self.mousepos = mousepos
 		self.rect.top = self.position[1]
 		self.rect.left = self.position[0]
 		self.enemies = enemies

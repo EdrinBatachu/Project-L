@@ -1,4 +1,5 @@
-import pygame
+import pygame, math
+from math import degrees
 
 def check_wall_collisions(walls, player, change):
 	checks = []
@@ -18,11 +19,15 @@ def move_enemy(enemies, walls, dt):
 	for enemy in enemies:
 		speed = enemy.speed * dt
 		if enemy.target != None:
-			direction = get_direction(enemy.position, enemy.target)
+			if enemy.target[0] > enemy.position[0]:
+				enemy.position[0] += speed
+			elif enemy.target[0] < enemy.position[0]:
+				enemy.position[0] += -speed
 
-			if check_wall_collisions(walls, enemy, (direction[0] * speed, direction[1] * speed)):
-				enemy.position[0] += direction[0] * speed
-				enemy.position[1] += direction[1] * speed
+			if enemy.target[1] > enemy.position[1]:
+				enemy.position[1] += speed
+			elif enemy.target[1] < enemy.position[1]:
+				enemy.position[1] += -speed
 
 
 def move(player, keys, dt, walls):
@@ -54,20 +59,35 @@ def move(player, keys, dt, walls):
 def get_direction(a, b):
 	c = [0, 0]
 	c[0] = a[0] - b[0]
+
 	c[1] = a[1] - b[1]
-	if c[0] < 0:
+	if c[0] > 0:
 		c[0] = 1
-	elif c[0] > 0:
+	elif c[0] < 0:
 		c[0] = -1
-	if c[1] < 0:
-		c[1] = -1
-	elif c[1] > 0:
+	if c[1] > 0:
 		c[1] = 1
+	elif c[1] < 0:
+		c[1] = -1
+
 	return c
 
+def get_deg_direction(a, b):
+	print(a)
+	print(b)
+	x = a[0] - b[0]
+	y = a[1] - b[1]
+	values = [math.cos(y/x), math.sin(y/x)]
+
+	if a[0] > b[0]:
+		values[0] *= -1
+		if a[1] > b[1]:
+			values[1] *= -1
+
+	return values
 
 if __name__ == "__main__":
 
 	vec1 = [0, 0]
-	vec2 = [-303, 1]
-	print(get_direction(vec1, vec2))
+	vec2 = [1, 1]
+	print(get_deg_direction(vec1, vec2))

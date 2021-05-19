@@ -1,7 +1,9 @@
 import json, pygame
 import enemies as E
 import render
-from movement import get_direction
+from render import width, height
+from math import degrees, radians
+from movement import get_deg_direction
 
 
 class Entity:
@@ -83,25 +85,25 @@ class ArcaneBarrage(Entity):
 			damage = caster.magic * 1.5 * caster.magic_mod
 			super().__init__((caster.position[:]), ArcaneBarrage.speed, caster.direction[:], ArcaneBarrage.surf, damage=damage,lifetime=3)
 			self.hit = []
-			self.target = pygame.mouse.get_pos()
+			self.target = caster.mousepos
+			self.direction = get_deg_direction(self.rect.center, self.target)
 			caster.entities.append(self)
 		else:
 			print("Not enough charge!")
 
 
 	def update(self, dt, enemies):
-		vector = get_direction(self.rect.center, self.target)
-		vector[0] *= self.speed * dt / 60
-		vector[1] *= self.speed * dt / 60
-		print(vector)
-		self.position[0] += vector[0]
-		self.position[1] += vector[1]
+		speed = self.speed * dt / 60
+		
+		self.position[0] += self.direction[0] * speed
+		self.position[1] += self.direction[1] * speed
 		self.rect.top = self.position[1]
 		self.rect.left = self.position[0]
 
 		for e in enemies:
 			if not (e in self.hit):
 				if e.rect.colliderect(self.rect):
+					print(e.position, self.position)
 					self.hit.append(e)
 					e.health -= (self.damage / e.magic_resist * e.magic_resist_mod)
 					if e.health < 0:

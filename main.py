@@ -6,6 +6,8 @@ import specials as s
 import render as r
 import floor_generation as f
 import movement
+import math
+import sys
 
 WIDTH, HEIGHT = 1280, 720
 WHITE = (255, 255, 255)
@@ -41,6 +43,9 @@ def main():
 
 	r.init(screen, player)
 
+	width = (screen.get_width() / 2) - (player.surf.get_width() / 2) 
+	height = (screen.get_height() / 2) - (player.surf.get_height() / 2) - (75)
+
 	running = True
 	clock = pygame.time.Clock()
 
@@ -52,6 +57,9 @@ def main():
 	while running:
 		screen.fill(BLACK)
 		dt = clock.tick(75)
+		mousepos = list(pygame.mouse.get_pos())
+		mousepos[0] += player.position[0] - width
+		mousepos[1] += player.position[1] - height
 
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -74,13 +82,12 @@ def main():
 							player.entities.remove(i)
 
 		update_entities(entities, player, dt)
-
-		player.update(entities)
+		player.update(entities, mousepos)
 		movement.move(player, pygame.key.get_pressed(), dt / 60, walls)
 		movement.move_enemy(entities, walls, dt / 60)
 		r.draw_room(room, player, screen)
 		r.draw_entities(screen, entities, player)
-		r.draw_hud(screen, player, int(clock.get_fps()))
+		r.draw_hud(screen, player, int(clock.get_fps()), mousepos)
 
 		pygame.display.flip()
 
@@ -88,3 +95,5 @@ def main():
 
 if __name__ == "__main__":
 	main()
+	pygame.quit()
+	sys.exit()

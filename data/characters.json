@@ -9,7 +9,8 @@
 		"speed" : 20,
 		"health" : 500,
 		"range" : "melee",
-		"description" : "The Knight is a brave warrior from the kingdom. Good attack and resists but slow speed."
+		"description" : "The Knight is a brave warrior from the kingdom. Good attack and resists but slow speed.",
+		"colour" : [83, 108, 112]
 	},
 	{
 		"id" : 1,
@@ -21,7 +22,8 @@
 		"speed" : 20,
 		"health" : 300,
 		"range" : "ranged",
-		"description" : "The Mage is a master of all things arcane. High attack but low armour. Average speed."
+		"description" : "The Mage is a master of all things arcane. High attack but low armour. Average speed.",
+		"colour" : [61, 99, 204]
 	},
 	{
 		"id" : 2,

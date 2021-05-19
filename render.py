@@ -73,7 +73,7 @@ hud = pygame.Surface((1280 - 300, 150))
 
 empty = pygame.Surface((0,0))
 
-def draw_hud(screen, player, fps):
+def draw_hud(screen, player, fps, mousepos):
 		
 		bar_border.fill(BLACK)
 		stat_border.fill(BLACK)
@@ -113,19 +113,19 @@ def draw_hud(screen, player, fps):
 		stat_border.fill(BLACK)
 		font = pygame.font.SysFont("Roboto Mono", 28)
 
-		text = font.render("Attack: %s" %(player.attack * player.attack_mod), True, DAMAGE_ORANGE)
+		text = font.render("Attack: %s" %(round(player.attack * player.attack_mod)), True, DAMAGE_ORANGE)
 		stat_hud.blit(text, (5, 5))
 
-		text = font.render("Armour: %s" %(player.armour * player.armour_mod), True, DAMAGE_ORANGE)
+		text = font.render("Armour: %s" %(round(player.armour * player.armour_mod)), True, DAMAGE_ORANGE)
 		stat_hud.blit(text, (5, 5 + 28))
 
-		text = font.render("Magic: %s" %(player.magic * player.magic_mod), True, MAGIC_BLUE)
+		text = font.render("Magic: %s" %(round(player.magic * player.magic_mod)), True, MAGIC_BLUE)
 		stat_hud.blit(text, (5, 5 + 28 * 2))
 
-		text = font.render("Magic resist: %s" %(player.magic_resist * player.magic_resist_mod), True, MAGIC_BLUE)
+		text = font.render("Magic resist: %s" %(round(player.magic_resist * player.magic_resist_mod)), True, MAGIC_BLUE)
 		stat_hud.blit(text, (5, 5 + 28 * 3))
 
-		text = font.render("Speed: %s" %(player.speed * player.speed_mod), True, WHITE)
+		text = font.render("Speed: %s" %(round(player.speed * player.speed_mod)), True, WHITE)
 		stat_hud.blit(text, (-text.get_width() + 280, 5))
 
 		stat_border.blit(stat_hud, (5, 5))
@@ -136,5 +136,8 @@ def draw_hud(screen, player, fps):
 
 		pos = font.render("(%s, %s)" % (int(player.position[0]), int(player.position[1])), True, WHITE)
 		screen.blit(pos, (screen.get_width() - pos.get_width(), fps.get_height() + 5))
+
+		mouse = font.render("(%s, %s)" % (int(player.mousepos[0]), int(player.mousepos[1])), True, WHITE)
+		screen.blit(mouse, (screen.get_width() - mouse.get_width(), fps.get_height() + 30))
 
 		screen.blit(hud, (150, 720 - 150))
