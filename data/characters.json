@@ -3,10 +3,10 @@
 		"id" : 0,
 		"name" : "Knight",
 		"attack" : 50,
-		"armour" : 50,
+		"armour" : 20,
 		"magic" : 0,
-		"magic_resist" : 40,
-		"speed" : 20,
+		"magic_resist" : 20,
+		"speed" : 13,
 		"health" : 500,
 		"range" : "melee",
 		"description" : "The Knight is a brave warrior from the kingdom. Good attack and resists but slow speed.",
@@ -16,8 +16,8 @@
 		"id" : 1,
 		"name" : "Mage",
 		"attack" : 10,
-		"armour" : 25,
-		"magic" : 100,
+		"armour" : 15,
+		"magic" : 60,
 		"magic_resist" : 40,
 		"speed" : 20,
 		"health" : 300,
@@ -29,13 +29,14 @@
 		"id" : 2,
 		"name" : "Juggernaut",
 		"attack" : 70,
-		"armour" : 50,
+		"armour" : 30,
 		"magic" : 0,
 		"magic_resist" : 50,
-		"speed" : 10,
+		"speed" : 15,
 		"health" : 700,
 		"range" : "melee",
-		"description" : "The Juggernaut is a renowned fighter, best known for his unrelenting strength. High attack and high defence, but abysmal speed."
+		"description" : "The Juggernaut is a renowned fighter, best known for his unrelenting strength. High attack and high defence, but abysmal speed.",
+		"colour" : [196, 45, 45]
 	},
 	{
 		"id" : 3,
@@ -47,7 +48,8 @@
 		"speed" : 20,
 		"health" : 250,
 		"range" : "melee",
-		"description" : "The Assassin is a criminal, armed with a dagger, dealing extremely high damage and having extremely high speed, but very low defence."
+		"description" : "The Assassin is a criminal, armed with a dagger, dealing extremely high damage and having extremely high speed, but very low defence.",
+		"colour" : [35, 166, 109]
 	},
 	{
 		"id" : 4,
@@ -59,6 +61,7 @@
 		"speed" : 13,
 		"health" : 1000,
 		"range" : "melee",
-		"description" : "The Tank is a reliable frontliner, extremely high defence but with low attack and speed."
+		"description" : "The Tank is a reliable frontliner, extremely high defence but with low attack and speed.",
+		"colour" : [74, 47, 1]
 	}
 ]

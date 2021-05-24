@@ -50,11 +50,18 @@ def draw_room(room, player, screen):
 		x += 1 
 
 
+def draw_animations(screen, player):
+	for i in player.animations:
+		screen.blit(i.surf, (i.position[0] - player.position[0] + width, i.position[1] - player.position[1] + height))
+
 
 def draw_entities(screen, entities, player):
 	for enemy in entities:
 		screen.blit(enemy.surf, (enemy.position[0] - player.position[0] + width, enemy.position[1] - player.position[1] + height))
-		enemyhealthbar = pygame.Surface((120 * (enemy.health / enemy.max_health), 10))
+		try:
+			enemyhealthbar = pygame.Surface((enemy.x * (enemy.health / enemy.max_health), 10))
+		except:
+			enemyhealthbar = pygame.Surface((0,0))
 		enemyhealthbar.fill(GREEN)
 		screen.blit(enemyhealthbar, (enemy.position[0] - player.position[0] + width, enemy.position[1] - player.position[1] + height - 20))
 

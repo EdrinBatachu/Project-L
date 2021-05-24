@@ -4,9 +4,11 @@ import render
 from render import width, height
 from math import degrees, radians
 from movement import get_deg_direction
+from main import calculate_damage_mod
+from animations import Animation
 
 
-class Entity:
+class Special:
 	def __init__(self, position, speed, direction, surface, damage=0, lifetime=0):
 		self.position = position
 		self.surf = surface
@@ -45,7 +47,7 @@ def get_passive(champ_name):
 	else:
 		return None
 
-class Judgement(Entity):
+class Judgement(Special):
 	id = 0
 	name = "Judgement"
 	description = "The god of the kingdom is called upon, smiting the enemy."
@@ -61,7 +63,7 @@ class Judgement(Entity):
 						enemy.health = 0
 					else:
 						caster.charge = 0
-						enemy.health -= caster.attack * caster.attack_mod * 1.5 / enemy.armour * enemy.armour_mod
+						enemy.health -= caster.attack * caster.attack_mod *  calculate_damage_mod(self, enemy, "armour")
 				else:
 					print("No one close enough!")
 
@@ -69,7 +71,7 @@ class Judgement(Entity):
 			print("Not enough charge!")
 
 
-class ArcaneBarrage(Entity):
+class ArcaneBarrage(Special):
 	id = 1
 	name = "Arcane Barrage"
 	description = "An unstoppable barrage of pure magic is hurled at the enemy."
@@ -105,20 +107,44 @@ class ArcaneBarrage(Entity):
 				if e.rect.colliderect(self.rect):
 					print(e.position, self.position)
 					self.hit.append(e)
-					e.health -= (self.damage / e.magic_resist * e.magic_resist_mod)
+					e.health -= self.damage * calculate_damage_mod(self, e, "magic")
 					if e.health < 0:
 						e.health = 0
 
-class Retaliate:
+class Retaliate(Special):
 	id = 2
 	name = "Retaliate"
-	description = "Juggernaut throws out a massive punch that deals more damage the more he's been hurt."
-	effect = "Deals 50 damage per 10% missing caster health."
+	description = "Juggernaut throws out a massive punch in a circle that deals more damage the more he's been hurt."
+	effect = "Deals 30 damage per 10% missing caster health + caster's attack."
 
-	def use(caster, enemy):
-		damage = caster.attack + (50 * (caster.max_health - caster.health) / 50)
-		enemy.health -= damage
-		print(damage)
+	def __init__(self, caster):
+		tenpercent = caster.max_health / 10
+		num = 0
+		while tenpercent < caster.max_health:
+			num += 1
+			tenpercent += caster.max_health / 10
+
+		damage = caster.attack * caster.attack_mod + (30 * num)
+		self.rect = pygame.Rect((0,0), (250, 250))
+		self.rect.center = caster.rect.center
+
+		if caster.charge == 100:
+			for i in caster.enemies:
+				if i.rect.colliderect(self.rect):
+
+					colors = [(226,34,76), (226,88,34), (226,184,34)]		
+					a = Animation(colors, 1, (self.rect.left, self.rect.top), (self.rect.width, self.rect.height), "special")
+					caster.animations.append(a)
+					enemy = i
+					damage *= calculate_damage_mod(self, enemy, "armour")
+					enemy.health -= damage
+					print(damage)
+					caster.charge = 0
+				else:
+					print("No one close enough!")
+
+		else:
+			print("Not enough charge!")
 
 class Backstab:
 	id = 3

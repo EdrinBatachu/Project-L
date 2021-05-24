@@ -2,6 +2,9 @@ import json
 import specials as s
 import pygame
 from movement import get_direction
+from main import calculate_damage_mod
+import random
+import animations
 
 with open("data/characters.json") as file:
 	champions = json.load(file)
@@ -32,6 +35,8 @@ class Fighter:
 		self.magic_mod = 1
 		self.magic_resist_mod = 1
 		self.speed_mod = 1
+		self.jump_speed = 150
+		self.jumping = False
 
 		self.accuracy = 100
 		self.evasion = 0
@@ -45,7 +50,7 @@ class Fighter:
 
 		self.charge = 80
 
-		self.position = [200, 200]
+		self.position = [200, 600]
 		self.direction = [1, -1]
 
 		self.special = s.get_special(self.name)
@@ -53,6 +58,7 @@ class Fighter:
 
 		self.entities = []
 		self.enemies = []
+		self.animations = []
 
 		self.surf = pygame.Surface((120, 160))
 		self.surf.fill((colour))
@@ -69,25 +75,41 @@ class Fighter:
 		self.enemies = enemies
 		#self.direction = list(pygame.mouse.get_pos())
 
-	def attack(self, target):
+	def auto(self):
+		for i in self.animations:
+			if i.name == "auto":
+				return
+
+		target = None
+		for i in self.enemies:
+			if (abs(i.rect.center[0] - self.rect.center[0]) < 200) and (abs(i.rect.center[1] - self.rect.center[1] < 200)):
+				target = i
+
+		if target is None:
+			return
+
 		if self.magic > self.attack:
 			damage = self.magic * self.magic_mod
-			if random.randint(0, 100) < crit_chance:
-				damage *= crit_damage
+			if random.randint(0, 100) < self.crit_chance:
+				damage *= self.crit_damage
 
-			damage /= target.magic_resist
+			damage *= calculate_damage_mod(self, target, "magic")
 
 		else:
 			damage = self.attack * self.attack_mod
-			if random.randint(0, 100) < crit_chance:
-				damage *= crit_damage
+			if random.randint(0, 100) < self.crit_chance:
+				damage *= self.crit_damage
 
-			damage /= target.armour
+			damage *= calculate_damage_mod(self, target, "armour")
 			
 		self.health += damage * self.lifesteal
 		target.health -= damage
 		if target.health < 0:
 			target.health = 0
+
+		colors = [(255, 255, 255), (150, 150, 150)]		
+		a = animations.Animation(colors, 0.25, target.rect.center, (50, 50), "auto")
+		self.animations.append(a)
 
 def main():
 	pass

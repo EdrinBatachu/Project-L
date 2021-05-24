@@ -2,12 +2,27 @@
 	{
 		"id" : 0,
 		"name" : "Biter",
-		"attack" : 10,
+		"attack" : 30,
 		"armour" : 5,
 		"magic" : 0,
 		"magic_resist" : 5,
 		"speed" : 5,
-		"health" : 100,
-		"description" : "Basic enemy."
+		"health" : 400,
+		"description" : "Basic enemy.",
+		"x" : 120,
+		"y" : 120
+	},
+	{
+		"id" : 1,
+		"name" : "Biggus wiggus",
+		"attack" : 100,
+		"armour" : 10,
+		"magic" : 0,
+		"magic_resist" : 10,
+		"speed" : 5,
+		"health" : 5000,
+		"description" : "Mini boss.",
+		"x" : 300,
+		"y" : 300
 	}
 ]

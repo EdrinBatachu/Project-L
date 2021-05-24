@@ -6,7 +6,7 @@ def check_wall_collisions(walls, player, change):
 	temp = player.position[:]
 	temp[0] += change[0]
 	temp[1] += change[1]
-	temprect = pygame.Rect(temp, (120, 160))
+	temprect = pygame.Rect(temp, (player.rect.width, player.rect.height))
 
 	for wall in walls:
 		if wall.colliderect(temprect):
@@ -19,16 +19,15 @@ def move_enemy(enemies, walls, dt):
 	for enemy in enemies:
 		speed = enemy.speed * dt
 		if enemy.target != None:
-			if enemy.target[0] > enemy.position[0]:
+			if int(enemy.target[0]) > int(enemy.position[0]):
 				enemy.position[0] += speed
-			elif enemy.target[0] < enemy.position[0]:
+			elif int(enemy.target[0]) < int(enemy.position[0]):
 				enemy.position[0] += -speed
 
-			if enemy.target[1] > enemy.position[1]:
+			if int(enemy.target[1]) > int(enemy.position[1]):
 				enemy.position[1] += speed
-			elif enemy.target[1] < enemy.position[1]:
+			elif int(enemy.target[1]) < int(enemy.position[1]):
 				enemy.position[1] += -speed
-
 
 def move(player, keys, dt, walls):
 	speed = player.speed * dt
@@ -37,7 +36,6 @@ def move(player, keys, dt, walls):
 		if check_wall_collisions(walls, player, (0, -speed)):
 			player.position[1] -= speed
 		player.direction[1] = -1
-
 	elif keys[pygame.K_s]:
 		if check_wall_collisions(walls, player, (0, speed)):
 			player.position[1] += speed
@@ -55,6 +53,7 @@ def move(player, keys, dt, walls):
 		player.direction[0] = 1
 	else:
 		player.direction[0] = 0
+
 
 def get_direction(a, b):
 	c = [0, 0]
@@ -78,7 +77,6 @@ def get_deg_direction(a, b):
 	x = a[0] - b[0]
 	y = a[1] - b[1]
 	values = [math.cos(y/x), math.sin(y/x)]
-
 	if a[0] > b[0]:
 		values[0] *= -1
 		if a[1] > b[1]:
